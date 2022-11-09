@@ -8,7 +8,7 @@
 # 8. A single char delimiter can be defined on the first line starting with `//` (e.g `//#\n1#2` for a ‘#’ as the delimiter)
 # 9. A multi char delimiter can be defined on the first line starting with `//` (e.g. `//###\n1###2` for ‘###’ as the delimiter)
 
-# 10 Allow the string calculator to accept roman numerals
+# 10 Allow the string calculator to accept roman numerals 'I,II' or 'I,2'
 # 11 Allow the string calculator to return roman numerals
 
 require './src/string_calculator'
@@ -62,6 +62,11 @@ RSpec.describe StringCalculator do
 
   it 'should use a complicated delimiter' do
     result = calculator.add('//###\n1###2')
+    expect(result).to eq(3)
+  end
+
+  it 'should return 3 when given I,II' do
+    result = calculator.add('I,II')
     expect(result).to eq(3)
   end
 end
