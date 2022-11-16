@@ -71,4 +71,24 @@ RSpec.describe RomanNumeral do
             expect(result).to eq('II')
         end
     end
+
+    describe '#is_roman?' do
+        it 'should return true when given I' do
+            converter = RomanNumeral.new
+            result = converter.is_roman?('I')
+            expect(result).to eq(true)
+        end
+
+        it 'should return false when given 3' do
+            converter = RomanNumeral.new
+            result = converter.is_roman?('3')
+            expect(result).to eq(false)
+        end
+
+        it 'should return true when given MXCII' do
+            converter = RomanNumeral.new
+            result = converter.is_roman?('MXCII')
+            expect(result).to eq(true)
+        end
+    end
 end

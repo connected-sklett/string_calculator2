@@ -69,4 +69,9 @@ RSpec.describe StringCalculator do
     result = calculator.add('I,II')
     expect(result).to eq(3)
   end
+
+  it 'should return III when given 1,2' do
+    result = calculator.add('1,2', :roman)
+    expect(result).to eq('III')
+  end
 end

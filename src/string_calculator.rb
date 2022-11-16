@@ -1,18 +1,29 @@
+require './src/roman_numeral'
+
 class StringCalculator
   attr_reader :str
 
-  def add(str)
+  def add(str, lang = :decimal)
     return 0 if str.empty?
     return str.to_i unless str.include?(',') || str.include?('\n')
     @str = str
 
-    ensure_valid_ints.sum { |x| x.to_i }
+    sum = ensure_valid_ints.sum { |x| x.to_i }
+    converter = RomanNumeral.new
+    lang == :roman ? converter.to_roman(sum) : sum
   end
 
   private
 
   def ints
-    @ints ||= Delimiter.create(str).split()
+    converter = RomanNumeral.new
+    @ints ||= Delimiter.create(str).split().map do |input|
+      if converter.is_roman?(input)
+        converter.to_integer(input)
+      else
+        input
+      end
+    end
   end
 
   def ensure_positive_integers
@@ -55,5 +66,37 @@ class CustomDelimiter < Delimiter
     head, tail = str.split('\n')
     delimiter = head.sub('//', '')
     tail.split(delimiter)
+  end
+end
+
+
+# ---------------------
+
+public interface Convertable {
+  public int to_integer(input);
+  public String to_string(input);
+}
+
+class RomanNumeralConverter implements Convertable {
+  # ...
+}
+
+class DecimalConverter implements Convertable {
+  # ....
+}
+
+def add(str, input_converter = DecimalConverter.new, output_converter = DecimalConverter.new)
+  return 0 if str.empty?
+  return str.to_i unless str.include?(',') || str.include?('\n')
+  @str = str
+
+  sum = ensure_valid_ints.sum { |x| x.to_i }
+  output_converter.to_string(sum)
+end
+
+def ints
+  converter = RomanNumeral.new
+  @ints ||= Delimiter.create(str).split().map do |input|
+    @input_converter.to_int(input)
   end
 end

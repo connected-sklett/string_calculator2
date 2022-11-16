@@ -39,6 +39,10 @@ class RomanNumeral
         result
     end
 
+    def is_roman?(str)
+        str.split('').all? { |n| !!NUMERAL_TO_INTEGER[n] }
+    end
+
     private
 
     def process_subtractive_pairs(roman_numeral)
